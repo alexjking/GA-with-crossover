@@ -1,5 +1,6 @@
 package uk.co.alexjking.ga.crossover;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -70,6 +71,10 @@ public class Individual {
 			}
 		}
 		return new Individual(charactersCopy);
+	}
+	
+	public String toString(){
+		return Arrays.toString(characters);
 	}
 	
 

@@ -74,7 +74,11 @@ public class Individual {
 	}
 	
 	public String toString(){
-		return Arrays.toString(characters);
+		String returnString = "";
+		for(int i=0; i<characters.length; i++){
+			returnString += characters[i];
+		}
+		return returnString;
 	}
 	
 

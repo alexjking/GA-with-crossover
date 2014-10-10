@@ -26,7 +26,7 @@ public class Main {
 	 */
 	public void printPopulation(){
 		for(int i=0; i< population.length; i++){
-			System.out.println(population[i]);
+			System.out.println(i + ": " + population[i]);
 		}
 	}
 	

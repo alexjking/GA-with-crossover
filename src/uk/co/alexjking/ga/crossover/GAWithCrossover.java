@@ -2,31 +2,35 @@ package uk.co.alexjking.ga.crossover;
 
 import java.util.Random;
 
+
 /**
  * Class which acts as a steady state Genetic Algorithm
- * with tournament selection.
+ * with tournament selection and crossover.
  * 
  * It picks two individuals at random, takes the fittest individual
- * and mutates it to create a child.
+ * to create a parent. This is repeated to make a second parent.
+ * 
+ * A child is created by taking both parents, applying the crossover
+ * function to them to create a new individual and then mutating this
+ * result.
+ * 
  * Another two individuals are chosen at random and the child 
  * replaces the least fit of these two individuals.
- * 
  * 
  * @author Alex King
  *
  */
-public class GAWithoutCrossover {
+public class GAWithCrossover {
 	
 	Individual[] population;
-	
 
 	public static void main(String[] args){
-		GAWithoutCrossover ga = new GAWithoutCrossover();
+		GAWithCrossover ga = new GAWithCrossover();
 		ga.start(500);
 	}
 	
 	/**
-	 * Start the GA.
+	 * Starts the GA.
 	 * 
 	 * @param populationSize
 	 * @return Number of mutations before maximum fitness achieved.
@@ -39,19 +43,28 @@ public class GAWithoutCrossover {
 	
 		while(fitness < Individual.targetString.length()){
 			
-			/* Choose parent */
+			/* Choose 1st parent */
 			Individual parentA = population[random.nextInt(populationSize)];
 			Individual parentB = population[random.nextInt(populationSize)];
-			Individual parent = null;
-			
+			Individual firstParent = null;
 			if(parentA.calculateFitness() > parentB.calculateFitness()){
-				parent = parentA;
+				firstParent = parentA;
 			}else{
-				parent = parentB;
+				firstParent = parentB;
+			}
+			/* Choose 2nd parent */
+			parentA = population[random.nextInt(populationSize)];
+			parentB = population[random.nextInt(populationSize)];
+			Individual secondParent = null;
+			if(parentA.calculateFitness() > parentB.calculateFitness()){
+				secondParent = parentA;
+			}else{
+				secondParent = parentB;
 			}
 			
 			/* Create child */
-			Individual child = parent.mutate();
+			Individual crossover = crossover(firstParent, secondParent);
+			Individual child = crossover.mutate();
 			
 			/* Choose an individual to be replaced by child */
 			int aIndex = random.nextInt(populationSize);
@@ -71,11 +84,36 @@ public class GAWithoutCrossover {
 				System.out.println(mutationCounter + ": " + child);
 			}
 			mutationCounter++;
+
 		}
 		
 		return mutationCounter;
 	}
 	
+	/**
+	 * Takes two individuals producing a new individual with some
+	 * characters from both of the individuals.
+	 * 
+	 * @param a First individual.
+	 * @param b Second individual.
+	 * @return New individual generated from individuals a and b.
+	 */
+	private Individual crossover(Individual a, Individual b){
+		Random random = new Random();
+		char[] aCharacters = a.getCharacters();
+		char[] bCharacters = b.getCharacters();
+		char[] childCharacters = new char[Individual.targetString.length()];
+		
+		for(int i=0; i<Individual.targetString.length(); i++){
+			if(random.nextDouble() < 0.5){
+				childCharacters[i] = aCharacters[i];
+			}else{
+				childCharacters[i] = bCharacters[i];
+			}
+		}
+		
+		return new Individual(childCharacters);
+	}
 	
 	/**
 	 * Initialises the population
@@ -88,4 +126,5 @@ public class GAWithoutCrossover {
 			population [i] = new Individual();
 		}
 	}
+
 }

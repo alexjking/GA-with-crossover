@@ -23,10 +23,21 @@ import java.util.Random;
 public class GAWithCrossover {
 	
 	Individual[] population;
+	int debug = 0; //set debug = 1 for printouts
 
 	public static void main(String[] args){
-		GAWithCrossover ga = new GAWithCrossover();
+		GAWithCrossover ga = new GAWithCrossover(1);
 		ga.start(500);
+	}
+	
+	public GAWithCrossover(){}
+	
+	/**
+	 * Set debug = 1 to view printouts.
+	 * @param debug
+	 */
+	public GAWithCrossover(int debug){
+		this.debug = debug;
 	}
 	
 	/**
@@ -81,7 +92,8 @@ public class GAWithCrossover {
 			int newFitness = child.calculateFitness();
 			if(fitness < newFitness){
 				fitness = newFitness;
-				System.out.println(mutationCounter + ": " + child);
+				if(debug == 1)
+					System.out.println(mutationCounter + ": " + child);
 			}
 			mutationCounter++;
 

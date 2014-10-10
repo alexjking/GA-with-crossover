@@ -11,7 +11,8 @@ import java.util.Random;
  */
 public class Individual {
 	private char[] characters;
-	private static String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz ";
+	private static final String targetString = "methinks it is like a weasel";
 	
 	/**
 	 * Initialise object with random characters.
@@ -72,6 +73,21 @@ public class Individual {
 		}
 		return new Individual(charactersCopy);
 	}
+	
+	/**
+	 * Calculate the fitness of this individual by comparing characters to a target string.
+	 * 
+	 * @return Fitness score.
+	 */
+	public int calculateFitness(){
+		int fitness = 0;	
+		for(int i=0; i<targetString.length(); i++){
+			if(targetString.charAt(i) == characters[i])
+				fitness++;
+		}
+		return fitness;
+	}
+	
 	
 	public String toString(){
 		String returnString = "";

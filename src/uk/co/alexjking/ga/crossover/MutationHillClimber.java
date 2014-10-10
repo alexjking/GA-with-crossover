@@ -5,6 +5,9 @@ package uk.co.alexjking.ga.crossover;
  * Hill climber which mutates the individual to get closer to the
  * target string.
  * 
+ * Running this class prints out the string each time it mutates to a higher fitness
+ * with the total mutation count.
+ * 
  * @author Alex King
  *
  */

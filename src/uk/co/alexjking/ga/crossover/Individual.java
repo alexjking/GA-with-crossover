@@ -12,13 +12,13 @@ import java.util.Random;
 public class Individual {
 	private char[] characters;
 	private static final String alphabet = "abcdefghijklmnopqrstuvwxyz ";
-	private static final String targetString = "methinks it is like a weasel";
+	protected static final String targetString = "methinks it is like a weasel";
 	
 	/**
 	 * Initialise object with random characters.
 	 */
 	public Individual(){
-		initCharacters(28);
+		initCharacters(targetString.length());
 	}
 	
 	/**
@@ -27,7 +27,10 @@ public class Individual {
 	 * @param characters
 	 */
 	public Individual(char[] characters){
-		this.characters = characters;
+		if(characters.length == targetString.length())
+			this.characters = characters;
+		else
+			System.err.println("Char array is not the same length as the target string.");
 	}
 	
 	/**
@@ -94,6 +97,7 @@ public class Individual {
 		for(int i=0; i<characters.length; i++){
 			returnString += characters[i];
 		}
+		returnString += " fit= " + this.calculateFitness();
 		return returnString;
 	}
 	

@@ -1,6 +1,5 @@
 package uk.co.alexjking.ga.crossover;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
